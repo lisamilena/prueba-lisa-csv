@@ -27,6 +27,13 @@ public abstract class AppException extends RuntimeException {
         this.type = type;
     }
 
+    public AppException(ExceptionType type, String message) {
+        super(type.getDescription());
+        this.code = type.getCode();
+        this.description = type.getDescription().concat(message);
+        this.type = type;
+    }
+
     public ExceptionType getType() {
         return type;
     }

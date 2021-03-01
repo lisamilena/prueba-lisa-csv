@@ -6,6 +6,10 @@ public class ServiceException extends AppException {
         super(code, message);
     }
 
+    public ServiceException(ExceptionType type, String message) {
+        super(type, message);
+    }
+
     public ServiceException(ExceptionType type) {
         super(type);
     }

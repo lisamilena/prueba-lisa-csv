@@ -3,7 +3,7 @@ package org.example.exception;
 public enum ExceptionType {
 
     UNKOWN_ERROR("00", "An unknown error occurred"),
-    ERROR_PRICES("01", "Error retrieving prices");
+    ERROR_FILE("01", "Error reading file");
 
     private final String code;
     private final String description;

@@ -1,6 +1,8 @@
 package org.example.controller;
 
 import ma.glasnost.orika.MapperFacade;
+import org.example.exception.ServiceException;
+import org.example.exceptions.ApiException;
 import org.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,9 +22,14 @@ public class ProductsController {
         this.mapper = mapper;
     }
 
-
     @GetMapping("prices")
     public List<Long> findPrices() {
-        return null; // TODO
+        try {
+            return productService.findPrices();
+        } catch (ServiceException e) {
+            throw new ApiException(e.getType());
+        } catch (Exception e) {
+            throw new ApiException("Error", e);
+        }
     }
 }
