@@ -1,11 +1,9 @@
 package org.example.controller;
 
-import ma.glasnost.orika.MapperFacade;
 import org.example.exception.ServiceException;
 import org.example.exceptions.ApiException;
 import org.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -14,15 +12,13 @@ import java.util.List;
 public class ProductsController {
 
     private final ProductService productService;
-    private final MapperFacade mapper;
 
     @Autowired
-    public ProductsController(ProductService productService, @Qualifier("restOrika") MapperFacade mapper) {
+    public ProductsController(ProductService productService) {
         this.productService = productService;
-        this.mapper = mapper;
     }
 
-    @GetMapping("prices")
+    @GetMapping("products")
     public List<Long> findPrices() {
         try {
             return productService.findPrices();

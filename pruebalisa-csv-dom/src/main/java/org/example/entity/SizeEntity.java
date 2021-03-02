@@ -1,16 +1,16 @@
-package org.example.model;
+package org.example.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductModel {
+public class SizeEntity {
 
     private Long id;
-    private Long sequence;
-    private List<SizeModel> sizes;
+    private Long productId;
+    private Boolean backSoon;
+    private Boolean special;
 }

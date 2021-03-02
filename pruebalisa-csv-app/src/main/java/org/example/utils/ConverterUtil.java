@@ -22,4 +22,13 @@ public class ConverterUtil {
             return null;
         }
     }
+
+    public static Boolean stringToBool(String value) {
+        try {
+            return Boolean.parseBoolean(value.trim());
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+            return null;
+        }
+    }
 }

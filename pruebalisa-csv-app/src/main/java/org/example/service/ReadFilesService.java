@@ -2,9 +2,11 @@ package org.example.service;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import org.example.entity.ProductEntity;
+import org.example.entity.SizeEntity;
+import org.example.entity.StockEntity;
 import org.example.exception.ExceptionType;
 import org.example.exception.ServiceException;
-import org.example.model.StockModel;
 import org.example.utils.ConverterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,26 +21,44 @@ import java.util.stream.Collectors;
 @Service("Files")
 public class ReadFilesService {
 
-    @Value("${file.product}")
-    private List<Resource> resources;
+    @Value("${csv-files.products}")
+    private Resource products;
+    @Value("${csv-files.sizes}")
+    private Resource sizes;
+    @Value("${csv-files.stock}")
+    private Resource stock;
 
     @Autowired
     public ReadFilesService() {}
 
-    private List<StockModel> getStock() {
-        return readFile(resources.get(0)).stream()
-                .map(item -> new StockModel(ConverterUtil.stringToLong(item[0]),
+    public List<StockEntity> getStockList() {
+        return readFile(stock).stream()
+                .map(item -> new StockEntity(ConverterUtil.stringToLong(item[0]),
                         ConverterUtil.stringToInteger(item[1])))
+                .collect(Collectors.toList());
+    }
+
+    public List<SizeEntity> getSizesList() {
+        return readFile(sizes).stream()
+                .map(item -> new SizeEntity(ConverterUtil.stringToLong(item[0]),
+                        ConverterUtil.stringToLong(item[1]),
+                        ConverterUtil.stringToBool(item[2]),
+                        ConverterUtil.stringToBool(item[3])))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductEntity> getProductsList() {
+        return readFile(products).stream()
+                .map(item -> new ProductEntity(ConverterUtil.stringToLong(item[0]),
+                        ConverterUtil.stringToLong(item[1])))
                 .collect(Collectors.toList());
     }
 
     private List<String[]> readFile(Resource resource) {
         try {
             return new CSVReader(new FileReader(resource.getFile())).readAll();
-        } catch (IOException e) {
-            throw new ServiceException(ExceptionType.ERROR_FILE, " (IOException):" + e.getMessage());
-        } catch (CsvException e) {
-            throw new ServiceException(ExceptionType.ERROR_FILE, " (CsvException):" + e.getMessage());
+        } catch (IOException | CsvException e) {
+            throw new ServiceException(ExceptionType.ERROR_FILE, " (" + resource.getFilename() + "):" + e.getMessage());
         }
     }
 }
