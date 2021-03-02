@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductsController {
@@ -19,9 +20,11 @@ public class ProductsController {
     }
 
     @GetMapping("products")
-    public List<Long> findPrices() {
+    public String findPrices() {
         try {
-            return productService.findPrices();
+            return productService.findPrices().stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(", "));
         } catch (ServiceException e) {
             throw new ApiException(e.getType());
         } catch (Exception e) {
