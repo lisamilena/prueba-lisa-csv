@@ -26,4 +26,4 @@ Con lo que el calculo de complejidad temporal quedaría:
 >
 > f(x) = 3n^2 + 1n + 3
 
-Visto que el resultado de la complejidad temporal aumenta tanto al anidar dos bucles, sería una buena mejora poder tener todos los datos en un mismo nivel, para tener un único nivel.
+Visto que el resultado de la complejidad temporal aumenta tanto al anidar dos bucles, sería una buena mejora poder tener todos los datos en un mismo nivel, para tener un único nivel de bucles.
